@@ -1,5 +1,6 @@
 #include <iostream>
 #include <conio.h>
+#include <stdlib.h>
 using namespace std;
 
 struct Nodo{
@@ -8,54 +9,71 @@ struct Nodo{
 	Nodo* izq;
 	
 };
-void agregar(int x);
+Nodo *crearNodo(int);
+void agregar(Nodo *&,int );
+void mostrar(Nodo *, int);
+bool busqueda(Nodo *, int);
+void orden(Nodo *);
+
+Nodo *arbol=NULL;
 
 int main(){
-	int x;
-	Nodo *Arbol=NULL;
-	agregar( x);
+	int dato, opcion, contador=0;
 	
-}
-void agregar(int x)
-{
-	if(Arbol==NULL){
-		Arbol=new Nodo();
-		Arbol.dato=x;
-		Arbol.izq=NULL;
-		Arbol.der=NULL;
-	}else while(true){
-			if(x>aux->dato){
-				if(aux->izq==NULL){
-					aux->izq=new Nodos();
-					aux=aux->izq;
-					aux->dato=x;
-					aux->izq=NULL;
-					aux->der=NULL;
-					break;	
+	do{
+		cout<<"\t ...:::M E N Ú::..."<<endl;
+		cout<<"1.- Agregar un nuevo nodo"<<endl;
+		cout<<"2.- Mostrar el arbol completo"<<endl;
+		cout<<"3.- Buscar un elemento en el arbol"<<endl;
+		cout<<"4.- Recorrer el arbol en Orden"<<endl;
+		cout<<"6.- Salir"<<endl;
+		cout<<"¿Cual opcion deseas? ";
+		cin>>opcion;
+		
+		switch(opcion){
+			case 1:
+				cout<<"Digite un numero que desee: ";
+				cin>>dato;
+				agregar(arbol,dato);
+				cout<<"\n";
+				system("pause");
+				break;
+			case 3:
+				cout<<"Digite el numero a buscar: ";
+				cin>>dato;
+				if(busqueda(arbol,dato)==true){
+					cout<<"Elemento "<<dato<<" encontrado";
 				}
-				
-			}else if(x<aux->dato){
-				if(aux->der==NULL){
-					aux->der=new Nodos();
-					aux=aux->der;
-					aux->dato=x;
-					aux->izq=NULL;
-					aux->der=NULL;
-					break;	
-				}else{
-					cout<<"Numero ya existente"<<endl;
-					break;
+				else{
+					cout<<"No enontrado";
 				}
-			}
+				cout<<"\n";
+				system("pause");
+				break;
+			case 4:
+				cout<<"Recorrido en Orden: "<<endl;
+				orden(arbol);
+				cout<<"\n\n";
+				system("pause");
 		}
+		system("cls");
+		
+	}while(opcion != 5);
 	
+	getch();
+	return 0;
 }
-void orden(Nodo*raiz){
-	if(raiz==NULL){
-		return;
-	}
-	orden(raiz->izq){
-		cout<<raiz->dato<<endl;
-		orden(raiz->der);
-	}
+
+Nodo *crearNodo(int n){
+	Nodo *nuevo_nodo = new Nodo();
+	
+	nuevo_nodo->dato= n;
+	nuevo_nodo->der = NULL;
+	nuevo_nodo->izq =NULL;
+	
+	return nuevo_nodo;
+}
+void agregar(int x){
+	
+	
 }
