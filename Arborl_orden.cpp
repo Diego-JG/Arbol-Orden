@@ -14,6 +14,7 @@ void agregar(Nodo *&,int );
 void mostrar(Nodo *, int);
 bool busqueda(Nodo *, int);
 void orden(Nodo *);
+void preOrden(Nodo *);
 
 Nodo *arbol=NULL;
 
@@ -26,6 +27,7 @@ int main(){
 		cout<<"2.- Mostrar el arbol completo"<<endl;
 		cout<<"3.- Buscar un elemento en el arbol"<<endl;
 		cout<<"4.- Recorrer el arbol en Orden"<<endl;
+		cout<<"5.- Recorrer el arbol en posOrden"<<endl;
 		cout<<"6.- Salir"<<endl;
 		cout<<"¿Cual opcion deseas? ";
 		cin>>opcion;
@@ -35,6 +37,12 @@ int main(){
 				cout<<"Digite un numero que desee: ";
 				cin>>dato;
 				agregar(arbol,dato);
+				cout<<"\n";
+				system("pause");
+				break;
+			case 2:
+				cout<<"\nMostrando el arbol competo:\n";
+				mostrar(arbol, contador);
 				cout<<"\n";
 				system("pause");
 				break;
@@ -55,10 +63,15 @@ int main(){
 				orden(arbol);
 				cout<<"\n\n";
 				system("pause");
+			case 5:
+				cout<<"Recorrido en preOrden: "<<endl;
+				preOrden(arbol);
+				cout<<"\n\n";
+				system("pause");
 		}
 		system("cls");
 		
-	}while(opcion != 5);
+	}while(opcion != 6);
 	
 	getch();
 	return 0;
@@ -73,7 +86,70 @@ Nodo *crearNodo(int n){
 	
 	return nuevo_nodo;
 }
-void agregar(int x){
-	
-	
+void agregar(Nodo *&arbol,int n){
+	if(arbol == NULL){
+		Nodo *nuevo_nodo = crearNodo(n);
+		arbol = nuevo_nodo;
+	}
+	else{
+		int valorRaiz = arbol->dato;
+		if(n < valorRaiz){
+			agregar(arbol->izq, n);
+		}
+		else{
+			agregar(arbol->der, n);
+		}
+	}
+}
+
+void mostrar(Nodo *arbol, int cont){
+	if(arbol == NULL){
+		return;
+	}
+	else{
+		mostrar(arbol->der,cont +1);
+		for(int i=0; i<cont; i++){
+			cout<<" ";
+		}
+		cout<<arbol->dato<<endl;
+		mostrar(arbol->izq, cont+1);
+	}
+}
+
+bool busqueda(Nodo *arbol, int n){
+	if(arbol == NULL){
+		return false;
+	}
+	else if(arbol->dato == n){
+		return true;
+	}
+	else if(n< arbol->dato){
+		return busqueda(arbol->izq, n);
+	}
+	else{
+		return busqueda(arbol->der, n);
+	}
+}
+
+void preOrden(Nodo *arbol){
+	if(arbol == NULL){
+		return;
+	}
+	else{
+		cout<<arbol->dato<<" ";
+		preOrden(arbol->izq);
+		preOrden(arbol->der);
+	}
+}
+
+void orden(Nodo *arbol){
+	if(arbol == NULL){
+		return;
+	}
+	else{
+		orden(arbol->izq);
+		cout<<arbol->dato<<" ";
+		orden(arbol->der);
+		
+	}
 }
